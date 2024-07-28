@@ -3,6 +3,7 @@ import { nanoid } from 'nanoid';
 import * as Yup from 'yup';
 import { InputTitle, StyledForm } from './RegisterForm.styled';
 import FormError from 'components/FormError';
+import { Link } from 'react-router-dom';
 
 const initialValues = {
   name: '',
@@ -52,6 +53,7 @@ const RegisterForm = () => {
           <Field type="password" name="password" id={passwordInputId} />
           <FormError name="password" />
         </label>
+        <Link to="/login">LogIn</Link>
         <button type="submit">Register</button>
       </StyledForm>
     </Formik>
