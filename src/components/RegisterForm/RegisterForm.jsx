@@ -2,6 +2,7 @@ import { Field, Formik } from 'formik';
 import { nanoid } from 'nanoid';
 import * as Yup from 'yup';
 import { InputTitle, StyledForm } from './RegisterForm.styled';
+import FormError from 'components/FormError';
 
 const initialValues = {
   name: '',
@@ -39,14 +40,17 @@ const RegisterForm = () => {
         <label htmlFor={nameInputId}>
           <InputTitle>Name</InputTitle>
           <Field type="text" name="name" id={nameInputId} />
+          <FormError name="name" />
         </label>
         <label htmlFor={emailInputId}>
           <InputTitle>Email</InputTitle>
           <Field type="email" name="email" id={emailInputId} />
+          <FormError name="email" />
         </label>
         <label htmlFor={passwordInputId}>
           <InputTitle>Password</InputTitle>
           <Field type="password" name="password" id={passwordInputId} />
+          <FormError name="password" />
         </label>
         <button type="submit">Register</button>
       </StyledForm>
