@@ -1,5 +1,9 @@
 const PhonebookPage = () => {
-  return <div>PhonebookPage</div>;
+  return (
+    <>
+      <div>PhonebookPage</div>
+    </>
+  );
 };
 
 export default PhonebookPage;
