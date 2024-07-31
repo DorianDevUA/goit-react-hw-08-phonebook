@@ -10,27 +10,26 @@ const Modal = ({ children }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const handleKeyDown = evt => {
+      if (evt.code === 'Escape') {
+        dispatch(toggleModal());
+      }
+    };
+
     window.document.addEventListener('keydown', handleKeyDown);
 
     return () => {
       window.document.removeEventListener('keydown', handleKeyDown);
     };
-  }, []);
-
-  const handleKeyDown = evt => {
-    if (evt.code === 'Escape') {
-      console.log('Escape toggleModal');
-    }
-  };
+  }, [dispatch]);
 
   const handleBackdropClick = evt => {
     if (evt.target === evt.currentTarget) {
-      console.log('backdrop toggleModal');
+      dispatch(toggleModal());
     }
   };
 
   const handleModalClose = () => {
-    console.log('Закриття модалки');
     dispatch(toggleModal());
   };
 
