@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
-import { Field, Formik } from 'formik';
 import { nanoid } from 'nanoid';
+import { Formik } from 'formik';
 import * as Yup from 'yup';
+
+import { useDispatch } from 'react-redux';
+import { authOperations } from 'redux/auth';
+
 import FormError from 'components/FormError';
-import { InputTitle, StyledForm } from './LoginForm.styled';
+import { InputTitle, StyledField, StyledForm } from './LoginForm.styled';
 
 const initialValues = {
   email: '',
@@ -16,15 +20,16 @@ const schema = Yup.object().shape({
 });
 
 const LoginForm = () => {
+  const dispatch = useDispatch();
+
   const emailInputId = nanoid();
   const passwordInputId = nanoid();
 
   const handleSubmit = (values, actions) => {
-    // console.log(values);
-    // console.log(actions);
-    // const { email, password } = values;
+    const { email, password } = values;
     const { resetForm } = actions;
 
+    dispatch(authOperations.logIn({ email, password }));
     resetForm();
   };
 
@@ -37,12 +42,12 @@ const LoginForm = () => {
       <StyledForm>
         <label htmlFor={emailInputId}>
           <InputTitle>Email</InputTitle>
-          <Field type="email" name="email" id={emailInputId} />
+          <StyledField type="email" name="email" id={emailInputId} />
           <FormError name="email" />
         </label>
         <label htmlFor={passwordInputId}>
           <InputTitle>Password</InputTitle>
-          <Field type="password" name="password" id={passwordInputId} />
+          <StyledField type="password" name="password" id={passwordInputId} />
           <FormError name="password" />
         </label>
         <Link to="/register">Register</Link>
