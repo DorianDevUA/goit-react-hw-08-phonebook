@@ -1,33 +1,29 @@
-import ContactForm from 'components/ContactForm';
-import ContactList from 'components/ContactList';
-import IconButton from 'components/IconButton';
-import { ImUserPlus } from 'react-icons/im';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { contactsOperations, contactsSelectors } from 'redux/contacts';
-import Modal from 'components/Modal';
+import { contactsOperations } from 'redux/contacts';
 import { modalSelectors } from 'redux/modal';
 import { toggleModal } from 'redux/modal/slice';
+import { filterSelectors } from 'redux/filter';
+import ContactFilter from 'components/ContactFilter';
+import ContactList from 'components/ContactList';
+import ContactForm from 'components/ContactForm';
+import Modal from 'components/Modal';
+import IconButton from 'components/IconButton';
+import { ImUserPlus } from 'react-icons/im';
 
 const PhonebookPage = () => {
   const dispatch = useDispatch();
   const isModalOpen = useSelector(modalSelectors.selectShowModal);
-  const filteredContacts = useSelector(contactsSelectors.selectContacts);
-  console.log('isModalOpen', isModalOpen);
+  const filteredContacts = useSelector(filterSelectors.selectFilteredContacts);
 
   useEffect(() => {
     dispatch(contactsOperations.getAll());
   }, [dispatch]);
 
-  // const filteredContacts = [
-  //   { id: 1, name: 'Alex', number: '890-90-90' },
-  //   { id: 2, name: 'Leyla', number: '530-40-95' },
-  //   { id: 3, name: 'Tymur', number: '120-10-10' },
-  // ];
-
   return (
     <>
       <h2>Contacts</h2>
+      <ContactFilter />
       <IconButton
         type="button"
         title="Add contact"
