@@ -11,7 +11,7 @@ const getAll = createAsyncThunk('contacts/getAll', async (_, thunkAPI) => {
   }
 });
 
-const create = createAsyncThunk(
+const createContact = createAsyncThunk(
   'contacts/create',
   async (contact, thunkAPI) => {
     try {
@@ -24,9 +24,21 @@ const create = createAsyncThunk(
   },
 );
 
+const deleteContact = createAsyncThunk(
+  'contacts/delete',
+  async (contactId, thunkAPI) => {
+    try {
+      await axios.delete(`/contacts/${contactId}`);
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.message);
+    }
+  },
+);
+
 const contactsOperations = {
   getAll,
-  create,
+  createContact,
+  deleteContact,
 };
 
 export default contactsOperations;

@@ -1,7 +1,11 @@
 import { ImPhone, ImUser } from 'react-icons/im';
+import { useDispatch } from 'react-redux';
+import { contactsOperations } from 'redux/contacts';
 
 const ContactItem = ({ contact }) => {
-  const { name, number } = contact;
+  const dispatch = useDispatch();
+
+  const { id, name, number } = contact;
 
   return (
     <>
@@ -15,7 +19,13 @@ const ContactItem = ({ contact }) => {
           <span>{number}</span>
         </li>
       </ul>
-      <button type="button" onClick={() => {}} aria-label={`Delete contact`}>
+      <button
+        type="button"
+        onClick={() => {
+          dispatch(contactsOperations.deleteContact(id));
+        }}
+        aria-label={`Delete contact`}
+      >
         Delete
       </button>
     </>

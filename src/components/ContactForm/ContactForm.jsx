@@ -4,6 +4,8 @@ import { nanoid } from 'nanoid';
 import * as Yup from 'yup';
 import { InputTitle, StyledLabel } from './ContactForm.styled';
 import IconButton from 'components/IconButton';
+import { useDispatch } from 'react-redux';
+import { contactsOperations } from 'redux/contacts';
 
 const initialValues = {
   name: '',
@@ -24,6 +26,7 @@ const schema = Yup.object().shape({
 });
 
 const ContactForm = () => {
+  const dispatch = useDispatch();
   const nameInputId = nanoid();
   const numberInputId = nanoid();
 
@@ -31,9 +34,7 @@ const ContactForm = () => {
     const { name, number } = values;
     const { resetForm } = actions;
 
-    console.log(name);
-    console.log(number);
-
+    dispatch(contactsOperations.createContact({ name, number }));
     resetForm();
   };
 
