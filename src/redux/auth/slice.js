@@ -27,6 +27,16 @@ const authSlice = createSlice({
         state.user = { name: null, email: null };
         state.token = null;
         state.isLoggedIn = false;
+      })
+      .addCase(
+        authOperations.getCurrentUser.fulfilled,
+        (state, { payload }) => {
+          state.user = { ...payload };
+          state.isLoggedIn = true;
+        },
+      )
+      .addCase(authOperations.getCurrentUser.rejected, state => {
+        state.isLoggedIn = false;
       });
   },
 });
