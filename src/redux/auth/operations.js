@@ -46,33 +46,29 @@ const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   }
 });
 
-const getCurrentUser = createAsyncThunk(
-  'auth/getCurrentUser',
-  async (_, thunkAPI) => {
-    const state = thunkAPI.getState();
-    const persistedToken = state.auth.token;
+const refreshUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
+  const state = thunkAPI.getState();
+  const persistedToken = state.auth.token;
 
-    if (persistedToken === null) {
-      console.log('Токена нет, уходим из getCurrentUser');
-      return thunkAPI.rejectWithValue();
-    }
+  if (!persistedToken) {
+    return thunkAPI.rejectWithValue('No valid token');
+  }
 
-    token.set(persistedToken);
+  token.set(persistedToken);
 
-    try {
-      const response = await axios.get('/users/current');
-      return response.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.message);
-    }
-  },
-);
+  try {
+    const response = await axios.get('/users/current');
+    return response.data;
+  } catch (error) {
+    return thunkAPI.rejectWithValue(error.message);
+  }
+});
 
 const authOperations = {
   register,
   logIn,
   logOut,
-  getCurrentUser,
+  refreshUser,
 };
 
 export default authOperations;
