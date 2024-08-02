@@ -11,12 +11,22 @@ const contactsSlice = createSlice({
   name: 'contacts',
   initialState,
   extraReducers: builder => {
-    builder.addCase(
-      contactsOperations.getAll.fulfilled,
-      (state, { payload }) => {
+    builder
+      .addCase(contactsOperations.getAll.fulfilled, (state, { payload }) => {
         state.items = payload;
-      },
-    );
+      })
+      .addCase(
+        contactsOperations.createContact.fulfilled,
+        (state, { payload }) => {
+          state.items.push(payload);
+        },
+      )
+      .addCase(
+        contactsOperations.deleteContact.fulfilled,
+        (state, { payload }) => {
+          state.items = state.items.filter(item => item.id !== payload.id);
+        },
+      );
   },
 });
 
