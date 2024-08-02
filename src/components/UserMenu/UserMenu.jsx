@@ -1,12 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
-import authSelectors from 'redux/auth/selectors';
+import { useDispatch } from 'react-redux';
 import { Container } from './UserMenu.styled';
 import defaultAvatar from './default-avatar.png';
 import { authOperations } from 'redux/auth';
+import { useAuth } from 'hooks';
 
 const UserMenu = () => {
   const dispatch = useDispatch();
-  const userName = useSelector(authSelectors.selectUserName);
+  const { user } = useAuth();
   const avatar = defaultAvatar;
 
   const handleLogOut = () => {
@@ -15,8 +15,8 @@ const UserMenu = () => {
 
   return (
     <Container>
-      <img src={avatar} alt={userName} width="32" />
-      <span>Вітаємо, {userName}</span>
+      <img src={avatar} alt={user.name} width="32" />
+      <span>Вітаємо, {user.name}</span>
       <button type="button" onClick={handleLogOut}>
         Вийти
       </button>
